@@ -3,11 +3,11 @@ import pyrebase
 
 def initialize_firebase():
     """
-    Initialize Firebase using Pyrebase with JSON configuration.
+    Initialize Firebase using Pyrebase with TOML configuration.
     """
     if 'firebase' not in st.session_state:
         try:
-            # Load Firebase configuration from your JSON file
+            # Load Firebase configuration from Streamlit secrets
             firebase_config = {
                 "apiKey": st.secrets["FIREBASE"]["apiKey"],
                 "authDomain": st.secrets["FIREBASE"]["authDomain"],
@@ -16,7 +16,7 @@ def initialize_firebase():
                 "storageBucket": st.secrets["FIREBASE"]["storageBucket"],
                 "messagingSenderId": st.secrets["FIREBASE"]["messagingSenderId"],
                 "appId": st.secrets["FIREBASE"]["appId"],
-                "serviceAccount": "parchem/parchem-app-03d4cab1485c.json"  # Replace with the correct path
+                "serviceAccount": st.secrets["PRIVATE_KEY"]["private_key"]  # Access private key
             }
 
             # Initialize Pyrebase instance
