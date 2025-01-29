@@ -22,7 +22,7 @@ def configure_email_settings():
 def send_order_email(order_details: dict) -> bool:
     """Send order email with error handling"""
     try:
-        msg = create_order_email(st.session_state.email, "naveed49478@gmail.com", order_details)
+        msg = create_order_email(st.session_state.email, "adigitalcare@gmail.com", order_details)
         with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
             server.starttls()
             server.login(st.session_state.email, st.session_state.password)
