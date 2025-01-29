@@ -1,5 +1,6 @@
 import streamlit as st
 import pyrebase
+import json
 
 def initialize_firebase():
     """
@@ -7,7 +8,7 @@ def initialize_firebase():
     """
     if 'firebase' not in st.session_state:
         try:
-            # Load Firebase configuration from your JSON file
+            # Load Firebase configuration from Streamlit secrets
             firebase_config = {
                 "apiKey": st.secrets["FIREBASE"]["apiKey"],
                 "authDomain": st.secrets["FIREBASE"]["authDomain"],
@@ -16,7 +17,7 @@ def initialize_firebase():
                 "storageBucket": st.secrets["FIREBASE"]["storageBucket"],
                 "messagingSenderId": st.secrets["FIREBASE"]["messagingSenderId"],
                 "appId": st.secrets["FIREBASE"]["appId"],
-                "serviceAccount": "parchem/parchem-app-03d4cab1485c.json"  # Replace with the correct path
+                "serviceAccount": json.loads(st.secrets["FIREBASE_SERVICE_ACCOUNT_JSON"])  # Load the secret here
             }
 
             # Initialize Pyrebase instance
