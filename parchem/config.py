@@ -3,7 +3,7 @@ import os
 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-DEFAULT_RECIPIENT = "naveed49478@gmail.com"
+DEFAULT_RECIPIENT = "adigitalcare@gmail.com"
 PACKAGING_OPTIONS = [
     "BULK / RAILCAR / BARGE",
     "FCL / TL / ISO TANK",
