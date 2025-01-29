@@ -8,4 +8,4 @@ myenv/
 .streamlit/secrets.toml
 
 # Ignore Firebase authentication file (contains sensitive credentials)
-parchem/parchem-app-03d4cab1485c.json
+#parchem/parchem-app-03d4cab1485c.json
