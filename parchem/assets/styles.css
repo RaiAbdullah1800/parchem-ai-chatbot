@@ -19,6 +19,7 @@
 
 /* Chat message styling */
 .stChatMessage {
+    background-color: rgb(131, 123, 123);
     padding: 1rem;
     border-radius: 0.5rem;
     margin: 0.5rem 0;
@@ -33,7 +34,7 @@
 
 /* Assistant message styling */
 .stChatMessage[data-testid="stChatMessage"] {
-    background-color: var(--background-gray);
+    background-color: rgb(211, 204, 204);
     border: 1px solid var(--primary-blue);
     color: var(--secondary-blue);
 }
