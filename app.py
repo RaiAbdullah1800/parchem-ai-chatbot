@@ -1,7 +1,7 @@
 import streamlit as st
 from parchem.auth.firebase import initialize_firebase
-from parchem.auth.components import show_login, show_signup, display_logo, show_login_prompt  # Import the display_logo function
-from parchem.auth.service import check_session, logout, get_current_user, save_message_to_firestore  # Added save_message_to_firestore
+from parchem.auth.components import show_login, show_signup, display_logo, show_login_prompt
+from parchem.auth.service import check_session, logout, get_current_user, save_message_to_firestore
 from parchem.llm.chains import initialize_chain
 from parchem.email.handler import configure_email_settings, send_order_email
 from parchem.orders.processor import handle_order_step
@@ -59,7 +59,6 @@ display_chat_history()
 configure_email_settings()
 
 # Chatbot logic
-# Chatbot logic
 if not st.session_state.order_mode:
     if prompt := st.chat_input("Ask about chemicals..."):
         # Save user message to session state
@@ -71,7 +70,6 @@ if not st.session_state.order_mode:
         # Generate response
         chain = st.session_state.chain
         response = chain.run(input=prompt)
-        
 
         # Save assistant response to session state
         st.session_state.messages.append({"role": "assistant", "content": response})
@@ -81,7 +79,7 @@ if not st.session_state.order_mode:
             save_message_to_firestore(user_id, prompt, response)
 
         # Check for order initiation
-        if "Please enter the required details..." in response:
+        if "Please enter the required details" in response:
             st.session_state.order_mode = True
             st.session_state.current_order = {}
 
@@ -94,11 +92,20 @@ if st.session_state.order_mode:
         if field not in st.session_state.current_order:
             break
     else:
+        # Save entire order details as user query in Firestore
+        if user_id:
+            order_details = st.session_state.current_order
+            order_query = f"Order details: {order_details}"
+            save_message_to_firestore(user_id, order_query, "Order received! Our team will contact you shortly.")
+        
+        # Send email after order completion
         if send_order_email(st.session_state.current_order):
             st.session_state.messages.append({
                 "role": "assistant",
                 "content": "Order received! Our team will contact you shortly."
             })
+
+        # Reset order mode and order details
         st.session_state.order_mode = False
         st.session_state.current_order = {}
         st.rerun()
