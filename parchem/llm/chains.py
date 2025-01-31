@@ -8,7 +8,7 @@ def initialize_chain():
     # Initialize LLM with OpenAI
     llm = ChatOpenAI(
         openai_api_key=os.getenv("OPENAI_API_KEY"), 
-        model="gpt-4-0125-preview",
+        model="gpt-4o-mini",
         temperature=0.7
     )
     

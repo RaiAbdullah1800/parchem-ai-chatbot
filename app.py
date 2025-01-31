@@ -1,8 +1,7 @@
-# app.py
 import streamlit as st
 from parchem.auth.firebase import initialize_firebase
-from parchem.auth.components import show_login, show_signup, display_logo,show_login_prompt  # Import the display_logo function
-from parchem.auth.service import check_session, logout, get_current_user
+from parchem.auth.components import show_login, show_signup, display_logo, show_login_prompt  # Import the display_logo function
+from parchem.auth.service import check_session, logout, get_current_user, save_message_to_firestore  # Added save_message_to_firestore
 from parchem.llm.chains import initialize_chain
 from parchem.email.handler import configure_email_settings, send_order_email
 from parchem.orders.processor import handle_order_step
@@ -42,6 +41,7 @@ if st.sidebar.button("Logout"):
 
 # Display user info
 current_user = get_current_user()
+user_id = current_user['localId'] if current_user else None
 if current_user:
     st.sidebar.success(f"Logged in as: {current_user['email']}")
 
@@ -59,22 +59,29 @@ display_chat_history()
 configure_email_settings()
 
 # Chatbot logic
+# Chatbot logic
 if not st.session_state.order_mode:
     if prompt := st.chat_input("Ask about chemicals..."):
-        # Add user message to history
+        # Save user message to session state
         st.session_state.messages.append({"role": "user", "content": prompt})
-        
-        # Get chain from session state
+
+        # Get current user ID
+        user_id = current_user['localId'] if current_user else None
+
+        # Generate response
         chain = st.session_state.chain
-        
-        # Generate response with memory
         response = chain.run(input=prompt)
         
-        # Add assistant response
+
+        # Save assistant response to session state
         st.session_state.messages.append({"role": "assistant", "content": response})
 
+        # ✅ Save both user query & assistant response together in Firestore
+        if user_id:
+            save_message_to_firestore(user_id, prompt, response)
+
         # Check for order initiation
-        if "Please enter the required details in the chat box to proceed with your order." in response:
+        if "Please enter the required details..." in response:
             st.session_state.order_mode = True
             st.session_state.current_order = {}
 

@@ -1,35 +1,45 @@
 import streamlit as st
-import pyrebase
 import json
+import firebase_admin
+from firebase_admin import credentials, firestore
+import pyrebase
 
 def initialize_firebase():
     """
-    Initialize Firebase using Pyrebase with JSON configuration from Streamlit secrets.
+    Initialize Firebase Admin SDK for Firestore and Pyrebase for Authentication.
     """
-    if 'firebase' not in st.session_state:
+    if 'firebase_initialized' not in st.session_state:
         try:
             # Load Firebase service account JSON from Streamlit secrets
             firebase_service_account_json = st.secrets["FIREBASE_SERVICE_ACCOUNT_JSON"]["json"]
-
-            # Parse the JSON string to a dictionary
             firebase_config = json.loads(firebase_service_account_json)
 
-            # Setup Firebase config from secrets
-            firebase_config = {
+            # ✅ Initialize Firebase Admin SDK (for Firestore)
+            if not firebase_admin._apps:
+                cred = credentials.Certificate(firebase_config)
+                firebase_admin.initialize_app(cred)
+
+            # ✅ Initialize Firestore Client
+            st.session_state.db = firestore.client()
+
+            # ✅ Initialize Pyrebase (for Authentication)
+            pyrebase_config = {
                 "apiKey": st.secrets["FIREBASE"]["apiKey"],
                 "authDomain": st.secrets["FIREBASE"]["authDomain"],
                 "projectId": st.secrets["FIREBASE"]["projectId"],
                 "databaseURL": st.secrets["FIREBASE"]["databaseURL"],
                 "storageBucket": st.secrets["FIREBASE"]["storageBucket"],
                 "messagingSenderId": st.secrets["FIREBASE"]["messagingSenderId"],
-                "appId": st.secrets["FIREBASE"]["appId"],
-                "serviceAccount": firebase_config  # Use service account dict from JSON
+                "appId": st.secrets["FIREBASE"]["appId"]
             }
+            firebase = pyrebase.initialize_app(pyrebase_config)
 
-            # Initialize Pyrebase instance
-            st.session_state.firebase = pyrebase.initialize_app(firebase_config)
-            st.session_state.auth = st.session_state.firebase.auth()
-            
+            # Store Firebase authentication in session state
+            st.session_state.auth = firebase.auth()
+
+            # Mark Firebase as initialized
+            st.session_state.firebase_initialized = True
+
         except Exception as e:
             st.error(f"Failed to initialize Firebase: {str(e)}")
             st.stop()

@@ -40,26 +40,23 @@ def show_signup():
                 st.error("Passwords do not match")
 
 
-
 def show_login_prompt():
     """
     Display a login prompt if the user is not authenticated.
     Hide this prompt once the user logs in.
     """
     if not check_session():
-        # Display login prompt when the user is not authenticated
-        st.markdown(
-    """
-
-    <div style="text-align: center; margin-top: 50px;">
-        <h3>Please login first to start chatting with </h3>
-        <h3><span class="animated-text">Parchem.ai</span><span class="dots"><span>.</span><span>.</span><span>.</span></span></h3>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
-
-
+        # Use a container to manage duplicate rendering
+        with st.empty():
+            st.markdown(
+                """
+                <div style="text-align: center; margin-top: 50px;">
+                    <h3>Please login first to start chatting with </h3>
+                    <h3><span class="animated-text">Parchem.ai</span><span class="dots"><span>.</span><span>.</span><span>.</span></span></h3>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
 
 def display_logo():
