@@ -50,7 +50,6 @@ langchain==0.3.15
 langchain-community==0.3.15
 langchain-core==0.3.31
 langchain-text-splitters==0.3.5
-langsmith
 markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 marshmallow==3.26.0
