@@ -8,10 +8,11 @@ jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout source code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Critical for force push to work
+          fetch-depth: 0            # Fetches all history and tags
+          persist-credentials: false  # Disable to avoid credential conflicts
 
       - name: Configure Git
         run: |
