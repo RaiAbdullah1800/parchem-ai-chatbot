@@ -39,7 +39,7 @@ if not check_session():
 if st.sidebar.button("Logout"):
     logout()
 
-# Display user info
+# Display user info test
 current_user = get_current_user()
 user_id = current_user['localId'] if current_user else None
 if current_user:
