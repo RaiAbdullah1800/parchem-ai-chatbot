@@ -8,6 +8,7 @@ from parchem.orders.processor import handle_order_step
 from parchem.ui.components import initialize_session_state, display_chat_history
 from parchem.config import ORDER_FIELDS
 
+st.set_page_config(page_title="parchem_ai", page_icon="https://www.parchem.com/images/logo.svg" )
 # Set page configuration
 def load_css():
     with open('parchem/assets/styles.css') as f:
@@ -28,22 +29,37 @@ if not check_session():
     tab1, tab2 = st.sidebar.tabs(["Login", "Sign Up"])
 
     with tab1:
-        show_login()
+        login_clicked = show_login()
 
     with tab2:
-        show_signup()
+        signup_clicked = show_signup()
+
+    # Rerun only if a successful login or signup occurred
+    if login_clicked or signup_clicked:
+        st.rerun()
 
     st.stop()
 
 # Logout button
 if st.sidebar.button("Logout"):
     logout()
+    st.session_state.clear()  # Clear the entire session state
+    st.rerun()
 
-# Display user info test
+# Display user info
 current_user = get_current_user()
 user_id = current_user['localId'] if current_user else None
 if current_user:
     st.sidebar.success(f"Logged in as: {current_user['email']}")
+
+# Display success messages if they exist
+if 'signup_success' in st.session_state:
+    st.success(st.session_state.signup_success)
+    del st.session_state.signup_success
+
+if 'login_success' in st.session_state:
+    st.success(st.session_state.login_success)
+    del st.session_state.login_success
 
 # Initialize user-specific chain
 if 'chain' not in st.session_state:
@@ -70,12 +86,12 @@ if not st.session_state.order_mode:
         # Generate response
         chain = st.session_state.chain
         response = chain.run(input=prompt)
-        response =response.replace("### ", "#### ")
+        response = response.replace("### ", "#### ")
 
         # Save assistant response to session state
         st.session_state.messages.append({"role": "assistant", "content": response})
 
-        # ✅ Save both user query & assistant response together in Firestore
+        # Save both user query & assistant response together in Firestore
         if user_id:
             save_message_to_firestore(user_id, prompt, response)
 

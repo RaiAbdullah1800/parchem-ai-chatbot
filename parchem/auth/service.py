@@ -44,11 +44,14 @@ def create_user(email: str, password: str):
     """
     try:
         user = st.session_state.auth.create_user_with_email_and_password(email, password)
-        st.success("Account created successfully! Please log in.")
-        return user
+        return user, None
     except Exception as e:
-        st.error(f"Signup Error: {str(e)}")
-        return None
+        error = eval(e.args[1])['error']['message']
+        if error == "EMAIL_EXISTS":
+            return None, "Email already exists. Please log in or use a different email."
+        elif error == "WEAK_PASSWORD":
+            return None, "Password should be at least 6 characters."
+        return None, f"Signup error: {error}"
 
 def authenticate_user(email: str, password: str):
     """
@@ -56,12 +59,12 @@ def authenticate_user(email: str, password: str):
     """
     try:
         user = st.session_state.auth.sign_in_with_email_and_password(email, password)
-        st.session_state.user = user
-        st.success("Login successful!")
-        return user
+        return user, None
     except Exception as e:
-        st.error(f"Login Error: {str(e)}")
-        return None
+        error = eval(e.args[1])['error']['message']
+        if error == "INVALID_PASSWORD" or error == "EMAIL_NOT_FOUND":
+            return None, "Invalid email or password."
+        return None, f"Login error: {error}"
 
 def check_session():
     """

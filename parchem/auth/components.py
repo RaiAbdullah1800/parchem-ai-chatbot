@@ -1,6 +1,5 @@
 import streamlit as st
-from .service import create_user, authenticate_user
-from .service import check_session
+from .service import create_user, authenticate_user, check_session
 
 def load_css():
     with open('parchem/assets/styles.css') as f:
@@ -9,36 +8,50 @@ def load_css():
 # Call the load_css function
 load_css()
 
-def show_login():
-    """
-    Display the login form.
-    """
-    with st.form("Login"):
-        email = st.text_input("Email",key="email_input")
-        password = st.text_input("Password", type="password",key="password_input")
-        if st.form_submit_button("Login"):
-            user = authenticate_user(email, password)
-            if user:
-                st.success("Logged in successfully!")
-                st.rerun()
-
 def show_signup():
-    """
-    Display the signup form.
-    """
+    """Display the signup form with proper state management."""
     with st.form("Signup"):
-        email = st.text_input("Email")
-        password = st.text_input("Password", type="password")
-        confirm_password = st.text_input("Confirm Password", type="password")
-        if st.form_submit_button("Sign Up"):
-            if password == confirm_password:
-                user = create_user(email, password)
-                if user:
-                    st.success("Account created successfully!")
-                    st.rerun()
-            else:
-                st.error("Passwords do not match")
+        email = st.text_input("Email", key="signup_email")
+        password = st.text_input("Password", type="password", key="signup_password")
+        confirm_password = st.text_input("Confirm Password", type="password", key="signup_confirm")
 
+        if st.form_submit_button("Sign Up"):
+            if password != confirm_password:
+                st.error("Passwords do not match!")
+                return False
+
+            user, error = create_user(email, password)
+            if user:
+                # Automatically log in after successful signup
+                auth_user, auth_error = authenticate_user(email, password)
+                if auth_user:
+                    st.session_state.user = auth_user
+                    st.session_state.signup_success = "Account created successfully! You're now logged in."
+                    return True
+                else:
+                    st.error(f"Auto-login failed: {auth_error}")
+                    return False
+            else:
+                st.error(error)
+                return False
+    return False
+
+def show_login():
+    """Display the login form with proper error handling."""
+    with st.form("Login"):
+        email = st.text_input("Email", key="login_email")
+        password = st.text_input("Password", type="password", key="login_password")
+
+        if st.form_submit_button("Login"):
+            user, error = authenticate_user(email, password)
+            if user:
+                st.session_state.user = user
+                st.session_state.login_success = "Logged in successfully!"
+                return True
+            else:
+                st.error(error)
+                return False
+    return False
 
 def show_login_prompt():
     """
@@ -57,7 +70,6 @@ def show_login_prompt():
                 """,
                 unsafe_allow_html=True
             )
-
 
 def display_logo():
     """
