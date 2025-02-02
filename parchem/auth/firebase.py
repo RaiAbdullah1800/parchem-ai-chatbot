@@ -30,7 +30,8 @@ def initialize_firebase():
                 "databaseURL": st.secrets["FIREBASE"]["databaseURL"],
                 "storageBucket": st.secrets["FIREBASE"]["storageBucket"],
                 "messagingSenderId": st.secrets["FIREBASE"]["messagingSenderId"],
-                "appId": st.secrets["FIREBASE"]["appId"]
+                "appId": st.secrets["FIREBASE"]["appId"],
+                "serviceAccount":firebase_config
             }
             firebase = pyrebase.initialize_app(pyrebase_config)
 
