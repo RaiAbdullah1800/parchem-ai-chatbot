@@ -38,6 +38,9 @@
 [data-testid="stBottom"]{
     background-color: var(--background-gray);
 }
+.st-emotion-cache-128upt6{
+    background-color: var(--background-gray);
+}
 /* Assistant message styling */
 .stChatMessage[data-testid="stChatMessage"] {
     background-color: rgb(211, 204, 204);
