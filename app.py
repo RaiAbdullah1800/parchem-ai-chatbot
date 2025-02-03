@@ -1,4 +1,5 @@
 import streamlit as st
+st.set_page_config(page_title="parchem.ai", page_icon="https://www.parchem.com/images/logo.svg" )
 from parchem.auth.firebase import initialize_firebase
 from parchem.auth.components import show_login, show_signup, display_logo, show_login_prompt
 from parchem.auth.service import check_session, logout, get_current_user, save_message_to_firestore
@@ -8,7 +9,7 @@ from parchem.orders.processor import handle_order_step
 from parchem.ui.components import initialize_session_state, display_chat_history
 from parchem.config import ORDER_FIELDS
 
-st.set_page_config(page_title="parchem.ai", page_icon="https://www.parchem.com/images/logo.svg" )
+
 # Set page configuration
 def load_css():
     with open('parchem/assets/styles.css') as f:
