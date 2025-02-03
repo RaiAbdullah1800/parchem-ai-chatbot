@@ -84,6 +84,11 @@ if not st.session_state.order_mode:
         # Get current user ID
         user_id = current_user['localId'] if current_user else None
 
+        # Create a placeholder for the loading indicator
+        loading_placeholder = st.empty()
+        loading_placeholder.text("...")  # or use "..." for three dots
+
+
         # Generate response
         chain = st.session_state.chain
         response = chain.run(input=prompt)

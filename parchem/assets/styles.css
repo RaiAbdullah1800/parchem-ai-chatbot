@@ -9,6 +9,7 @@
 /* Main container styling */
 .stApp {
     background-color: whitesmoke;
+    
 }
 .stAppHeader{
     visibility: hidden;
@@ -178,6 +179,7 @@
     border: 3px black ;
 
 }
+
 [data-baseweb="base-input"]:focus { 
     outline: 3px solid #0065b3 !important;
     border: 3px solid black;
@@ -195,3 +197,23 @@ _container_gzau3_1{
     visibility: hidden;
 
 }
+
+@keyframes dot-blink {
+    0% { content: '. . .'; }
+    33% { content: '. '; }
+    66% { content: '. .'; }
+    100% { content: '. . .'; }
+}
+
+.st-emotion-cache-y4bq5x {
+    font-size: 24px;
+    font-weight: bold;
+    position: relative;
+}
+
+.st-emotion-cache-y4bq5x::after {
+    content: '. . .';
+    animation: dot-blink 1s infinite;
+    color: var(--secondary-blue);  /* Choose a color that's visible against your background */
+}
+
