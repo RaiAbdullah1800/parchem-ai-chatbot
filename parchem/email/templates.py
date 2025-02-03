@@ -1,4 +1,3 @@
-# Email templates
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -8,7 +7,7 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
     CHEMICAL ORDER DETAILS
     ------------------------
     Product: {order_details['product']}
-    Quantity: {order_details['quantity']}
+    Quantity: {order_details['quantity']} {order_details['unit']}
     Packaging: {order_details['packaging']}
     Delivery Date: {order_details['delivery_date']}
     
@@ -19,6 +18,8 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
     Phone: {order_details['phone']}
     Address: {order_details['address']}
     Website: {order_details.get('website', 'N/A')}
+    Country: {order_details['country']}
+    Occupation: {order_details['occupation']}
     
     SPECIAL INSTRUCTIONS
     --------------------
@@ -61,7 +62,7 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
             <span class="detail-label">Product:</span> {order_details['product']}
           </div>
           <div class="detail-row">
-            <span class="detail-label">Quantity:</span> {order_details['quantity']}
+            <span class="detail-label">Quantity:</span> {order_details['quantity']} {order_details['unit']}
           </div>
           <div class="detail-row">
             <span class="detail-label">Packaging:</span> {order_details['packaging']}
@@ -85,6 +86,12 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
           </div>
           <div class="detail-row">
             <span class="detail-label">Website:</span> {order_details.get('website', 'N/A')}
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Country:</span> {order_details['country']}
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Occupation:</span> {order_details['occupation']}
           </div>
           
           <div class="section-title">Special Instructions</div>
