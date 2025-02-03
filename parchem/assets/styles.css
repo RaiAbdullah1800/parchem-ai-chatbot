@@ -32,7 +32,12 @@
     background-color: var(--primary-blue);
     color: blue;
 }
-
+[data-testid="stMarkdownContainer"]> p{
+    color: white;
+}
+[data-testid="stBottom"]{
+    background-color: var(--background-gray);
+}
 /* Assistant message styling */
 .stChatMessage[data-testid="stChatMessage"] {
     background-color: rgb(211, 204, 204);

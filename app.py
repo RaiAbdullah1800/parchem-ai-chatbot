@@ -8,7 +8,7 @@ from parchem.orders.processor import handle_order_step
 from parchem.ui.components import initialize_session_state, display_chat_history
 from parchem.config import ORDER_FIELDS
 
-st.set_page_config(page_title="parchem_ai", page_icon="https://www.parchem.com/images/logo.svg" )
+st.set_page_config(page_title="parchem.ai", page_icon="https://www.parchem.com/images/logo.svg" )
 # Set page configuration
 def load_css():
     with open('parchem/assets/styles.css') as f:
