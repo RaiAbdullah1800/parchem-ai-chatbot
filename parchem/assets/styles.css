@@ -175,10 +175,12 @@
     color: #0065b3 !important;
     -webkit-text-fill-color: #0065b3 !important;
     box-shadow: 0 0 0px 1000px white inset !important; /* Force white background */
+    border: 3px black ;
 
 }
-[data-baseweb="base-input"]:focus {
-    outline: 2px solid #0065b3 !important;
+[data-baseweb="base-input"]:focus { 
+    outline: 3px solid #0065b3 !important;
+    border: 3px solid black;
     
 }
 
