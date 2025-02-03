@@ -22,7 +22,7 @@ UNIT_OPTIONS = [
 ]
 ORDER_FIELDS = {
     'product': "Enter product name:",
-    'unit': "Select unit:",
+    'unit': "Select unit for quantity:",
     'quantity': "Enter quantity:",
     'packaging': "Select packaging type:",
     'delivery_date': "Select delivery date:",

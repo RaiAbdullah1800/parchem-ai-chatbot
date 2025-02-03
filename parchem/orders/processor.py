@@ -25,20 +25,6 @@ def handle_order_step(field: str, prompt: str):
                 st.session_state.current_order[field] = formatted_date
                 st.session_state.messages.append({"role": "user", "content": formatted_date})
                 st.rerun()
-        elif field in ['website', 'special_instructions']:
-            response = st.text_input(prompt)
-            if st.button("Submit"):
-                st.session_state.current_order[field] = response
-                if response:
-                    st.session_state.messages.append({"role": "user", "content": response})
-                st.rerun()
-        elif field == 'occupation':
-            occupation = st.text_input(prompt)
-            if st.button("Submit"):
-                st.session_state.current_order[field] = occupation
-                if occupation:
-                    st.session_state.messages.append({"role": "user", "content": occupation})
-                st.rerun()
         else:
             response = st.chat_input(prompt)
             if response:
