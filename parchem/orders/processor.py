@@ -1,18 +1,20 @@
 # code orders/processor.py is below  
 import datetime
 import streamlit as st
-from parchem.config import ORDER_FIELDS, PACKAGING_OPTIONS, UNIT_OPTIONS
+# from parchem.config import ORDER_FIELDS, PACKAGING_OPTIONS, UNIT_OPTIONS
+from parchem.config import   UNIT_OPTIONS
 
 def handle_order_step(field: str, prompt: str):
     """Handle different input types for order collection"""
     if field not in st.session_state.current_order:
-        if field == 'packaging':
-            selection = st.selectbox(prompt, PACKAGING_OPTIONS)
-            if st.button("Submit"):
-                st.session_state.current_order[field] = selection
-                st.session_state.messages.append({"role": "user", "content": selection})
-                st.rerun()
-        elif field == 'unit':
+        # if field == 'packaging':
+        #     selection = st.selectbox(prompt, PACKAGING_OPTIONS)
+        #     if st.button("Submit"):
+        #         st.session_state.current_order[field] = selection
+        #         st.session_state.messages.append({"role": "user", "content": selection})
+        #         st.rerun()
+        #elif field == 'unit':
+        if field == 'unit':
             selection = st.selectbox(prompt, UNIT_OPTIONS)
             if st.button("Submit"):
                 st.session_state.current_order[field] = selection
