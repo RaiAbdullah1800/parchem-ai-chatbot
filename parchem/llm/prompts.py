@@ -21,9 +21,7 @@ Follow these response rules strictly:
    - Keep the tone conversational, aiming to lead towards further engagement like an RFQ chat.
 
 4. For enhancing engagement and making the response more attractive:
-   - Add relevant emojis/icons to responses where appropriate (e.g., 🔬 for chemical-related inquiries, ⚠️ for safety-related information, 🌱 for environmental impact, etc.).
-   - Keep the use of icons natural and not overwhelming, so it improves the visual appeal without affecting the professionalism of the response.
-
+   - Must add relevant emojis/icons to responses as much as possible alteast one per line.
 
 """
 
