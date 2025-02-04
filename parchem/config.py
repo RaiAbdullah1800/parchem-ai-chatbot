@@ -21,17 +21,17 @@ UNIT_OPTIONS = [
     "MOQ"
 ]
 ORDER_FIELDS = {
-    'product': "Enter product name:",
-    'unit': "Select unit for quantity:",
-    'quantity': "Enter quantity:",
+    'product': "To make sure we have it right, please enter the exact product name.",
+    'unit': "Which unit do you prefer for the quantity?",
+    'quantity': "How many units do you need?",
     'packaging': "Select packaging type:",
     'delivery_date': "Select delivery date:",
-    'company_name': "Enter company name:",
-    'country':"Enter your country name",
-    'email': "Enter business email:",
-    'phone': "Enter contact number:",
-    'address': "Enter delivery address:",
-    'website': "Company website (optional):",
-    'occupation': "Enter your occupation:",
-    'special_instructions': "Special instructions (optional):"
+    'company_name': "What’s your company name?",
+    'country':"Which country are you in?",
+    'email': "What’s your business email?",
+    'phone': "What’s your contact number?",
+    'address': "Where should we deliver it?",
+    'website': "Do you have a website? (optional)",
+    'occupation': "what’s your occupation:",
+    'special_instructions': "Any special instructions? (optional)"
 }

@@ -102,7 +102,7 @@ if not st.session_state.order_mode:
             save_message_to_firestore(user_id, prompt, response)
 
         # Check for order initiation
-        if "Please enter the required details" in response:
+        if "Please provide the required information" in response:
             st.session_state.order_mode = True
             st.session_state.current_order = {}
 
