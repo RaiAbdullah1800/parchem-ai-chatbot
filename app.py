@@ -119,13 +119,13 @@ if st.session_state.order_mode:
         if user_id:
             order_details = st.session_state.current_order
             order_query = f"Order details: {order_details}"
-            save_message_to_firestore(user_id, order_query, "Order received! Our team will contact you shortly.")
+            save_message_to_firestore(user_id, order_query, "Inquire received! Our team will contact you shortly.")
         
         # Send email after order completion
         if send_order_email(st.session_state.current_order):
             st.session_state.messages.append({
                 "role": "assistant",
-                "content": "Order received! Our team will contact you shortly."
+                "content": "Inquiry received! Our team will contact you shortly."
             })
 
         # Reset order mode and order details
