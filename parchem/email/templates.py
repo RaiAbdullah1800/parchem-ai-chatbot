@@ -125,6 +125,7 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
     Product: {order_details['product']}
     Quantity: {order_details['quantity']} {order_details['unit']}
     Delivery Date: {order_details['delivery_date']}
+    Email: {order_details['email']}
     Delivery Address: {order_details['address']}
     """
 
@@ -166,6 +167,9 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
           <div class="detail-row">
             <span class="detail-label">Quantity:</span> {order_details['quantity']} {order_details['unit']}
           </div>
+                    <div class="detail-row">
+            <span class="detail-label">Email:</span> {order_details['email']}
+          </div>
           <div class="detail-row">
             <span class="detail-label">Delivery Date:</span> {order_details['delivery_date']}
           </div>
@@ -178,7 +182,7 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
     """
 
     msg = MIMEMultipart('alternative')
-    msg['Subject'] = f"🔬 Chemical Order - {order_details['product']}"
+    msg['Subject'] = f"🔬 RFQ Request for  - {order_details['product']}"
     msg['From'] = f"Parchem Orders <{sender}>"
     msg['To'] = recipient
     
