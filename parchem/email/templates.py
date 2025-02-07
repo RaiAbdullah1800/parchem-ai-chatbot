@@ -126,7 +126,7 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
     Quantity: {order_details['quantity']} {order_details['unit']}
     Delivery Date: {order_details['delivery_date']}
     Email: {order_details['email']}
-    Delivery Address: {order_details['address']}
+    Delivery Country: {order_details['address']}
     """
 
     html_content = f"""
@@ -174,7 +174,7 @@ def create_order_email(sender: str, recipient: str, order_details: dict) -> MIME
             <span class="detail-label">Delivery Date:</span> {order_details['delivery_date']}
           </div>
           <div class="detail-row">
-            <span class="detail-label">Delivery Address:</span> {order_details['address']}
+            <span class="detail-label">Delivery Country:</span> {order_details['address']}
           </div>
         </div>
       </body>
